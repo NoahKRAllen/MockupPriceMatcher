@@ -2,7 +2,7 @@
 import os
 from langchain.tools import tool
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "../mock_data/dataset.sqlite")
+DB_PATH = os.path.join(os.path.dirname(__file__), "../mockup_databases/bestbuy_mockup_dataset.sqlite")
 
 #For the time being, we are using best buy playground as I don't have access to a proper best buy api key
 #that means this line does nothing at the moment, so commenting out to avoid any issues
