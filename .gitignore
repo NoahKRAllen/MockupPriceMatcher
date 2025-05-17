@@ -172,3 +172,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+
+# Removal of sqlite databases
+.sqlite3
+.sqlite
