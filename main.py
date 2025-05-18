@@ -1,9 +1,8 @@
 ﻿from langchain.agents import initialize_agent, AgentType
 from langchain_ollama.llms import OllamaLLM
-from tools.mock_bestbuy_tool import search_bestbuy
+from llm_tools import tools
 
 llm = OllamaLLM(model="gemma3")
-tools = [search_bestbuy]
 
 agent = initialize_agent(
     tools=tools,

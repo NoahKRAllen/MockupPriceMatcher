@@ -1,6 +1,6 @@
 ﻿import sqlite3
 import os
-from langchain.tools import tool
+from langchain.tools import Tool
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "../mockup_databases/bestbuy_mockup_dataset.sqlite")
 
@@ -8,16 +8,8 @@ DB_PATH = os.path.join(os.path.dirname(__file__), "../mockup_databases/bestbuy_m
 #that means this line does nothing at the moment, so commenting out to avoid any issues
 #BESTBUY_API_KEY = os.getenv("BESTBUY_API_KEY")
 
-@tool
 def search_bestbuy(product_name: str) -> str:
-    """Mock: Search BestBuy using the local SQLite Database"""
-    #import re
-    #import sqlite3
-
-    #match = re.match(r"(.*?)\s+(?:near|in)\s+(\d{5})", query, re.IGNORECASE)
-    #if not match:
-        #return "Please use the format 'product name near zip code', e.g, 'Iphone near 97360'."
-    #product_name, zip_code = match.groups()
+    """Search BestBuy using the local SQLite Database"""
     try:
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
@@ -47,3 +39,9 @@ def search_bestbuy(product_name: str) -> str:
     finally:
         if conn:
             conn.close()
+
+search_bestbuy_tool = Tool(
+    name = "search_bestbuy",
+    func = search_bestbuy,
+    description = """Search BestBuy using the local SQLite Database and return the name, price, and mock URL for the items"""
+)
