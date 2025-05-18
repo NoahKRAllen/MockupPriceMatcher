@@ -2,13 +2,13 @@
 import os
 from langchain.tools import Tool
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "../mockup_databases/bestbuy_mockup_dataset.sqlite")
+DB_PATH = os.path.join(os.path.dirname(__file__), "../mockup_databases/target_mockup_dataset.sqlite")
 
 #For the time being, we are using best buy playground as I don't have access to a proper best buy api key
 #that means this line does nothing at the moment, so commenting out to avoid any issues
-#BESTBUY_API_KEY = os.getenv("BESTBUY_API_KEY")
+#TARGET_API_KEY = os.getenv("TARGET_API_KEY")
 
-def search_bestbuy(product_name: str) -> str | list[dict]:
+def search_target(product_name: str) -> str | list[dict]:
     try:
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
@@ -26,7 +26,7 @@ def search_bestbuy(product_name: str) -> str | list[dict]:
         if not results:
             return f"No products found for '{product_name}'"
 
-        store = "Best Buy"
+        store = "Target"
         structured_results = []
         for name, price, url in results:
             structured_results.append({
@@ -44,8 +44,8 @@ def search_bestbuy(product_name: str) -> str | list[dict]:
         if conn:
             conn.close()
 
-search_bestbuy_tool = Tool(
-    name = "search_bestbuy",
-    func = search_bestbuy,
-    description = """Search BestBuy using the local SQLite Database and return the name, price, and mock URL for the items"""
+search_target_tool = Tool(
+    name = "search_target",
+    func = search_target,
+    description = """Search Target using the local SQLite Database and return the name, price, and mock URL for the items"""
 )
