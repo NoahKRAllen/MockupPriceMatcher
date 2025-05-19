@@ -1,12 +1,12 @@
 ﻿from langchain.agents import initialize_agent, AgentType
 from langchain_ollama.llms import OllamaLLM
-from llm_tools import tools
 from llm_tools.comparison_search import compare_prices_search
+from llm_tools.multi_shop_search import multi_shop_search
 
 llm = OllamaLLM(model="gemma3")
 
-single_search_agent = initialize_agent(
-    tools=tools,
+multi_shop_agent = initialize_agent(
+    tools=[multi_shop_search],
     llm=llm,
     agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
     verbose=True,
@@ -25,6 +25,6 @@ if __name__ == "__main__":
     if "compare" in query.lower():
         response = compare_prices_search(query)
     else:
-        response = single_search_agent(query)
+        response = multi_shop_agent(query)
 
     print(response)

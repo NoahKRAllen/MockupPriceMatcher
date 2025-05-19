@@ -24,7 +24,7 @@ def search_walmart(product_name: str) -> str | list[dict]:
         results = cursor.fetchall()
 
         if not results:
-            return f"No products found for '{product_name}'"
+            return f"No products found for '{product_name}' at Walmart"
 
         store = "Walmart"
         structured_results = []
