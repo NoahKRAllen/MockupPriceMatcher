@@ -3,6 +3,7 @@ from llm_tools import tools
 import re
 def multi_shop(product_name: str) -> str:
     """Finds product prices across BestBuy, Walmart, and Target and returns the top three options from each shop."""
+
     product_name = re.sub(r'(?i)^product_name\s*=\s*', '', product_name).strip().strip('"')
     results = []
     for search_fn in tools:
