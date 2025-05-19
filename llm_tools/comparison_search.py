@@ -30,5 +30,8 @@ def compare_prices(product_name: str) -> str:
 compare_prices_search = Tool(
     name = "comparison_search",
     func = compare_prices,
-    description = """Compares product prices across BestBuy, Walmart, and Target and returns the top 10 options."""
+    description =
+        "Use this tool when the user wants to compare prices for a product across multiple retailers. "
+        "It searches BestBuy, Walmart, and Target, then returns the top 10 cheapest options. "
+        "The input should be a product name, like 'iPhone' or 'Bluetooth headphones'."
 )
