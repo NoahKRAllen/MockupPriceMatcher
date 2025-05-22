@@ -9,7 +9,7 @@ DB_PATH = os.path.join(os.path.dirname(__file__), "../mockup_databases/bestbuy_m
 #BESTBUY_API_KEY = os.getenv("BESTBUY_API_KEY")
 
 def search_bestbuy(product_name: str) -> str | list[dict]:
-    print(f"Raw Input to tool: {product_name!r}")
+    print(f"Raw Input to tool: {product_name}")
     try:
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
