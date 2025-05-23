@@ -18,7 +18,7 @@ def multi_shop(product_name: str) -> str:
 
 
         except Exception as e:
-            results.append({
+            results.extend({
                 "name": f"Error from {search_fn.__name__}: {str(e)}",
                 "price": float('inf'),
                 "store": "N/A",
