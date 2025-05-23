@@ -6,7 +6,7 @@ llm = OllamaLLM(model="gemma3")
 def main():
     while True:
         query = input("What can I help you with?")
-        print("[DEBUG] input_dict passed to smart_router:", query)
+        print("[DEBUG] Input grabbed from user:", query)
         if query.lower() in ["exit", "quit", "close"]:
             break
 

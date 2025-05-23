@@ -8,10 +8,11 @@ from pydantic import BaseModel
 llm=OllamaLLM(model="gemma3")
 
 
-def smart_router(input_model) -> str:
+def smart_router(input_model) -> dict:
     print("[DEBUG] input_dict passed to smart_router:", input_model)
 
     user_input_str = input_model.user_input
+    print("[DEBUG] input grabbed from input_model.user_input: ", user_input_str)
     if not user_input_str:
         print("[WARNING] No 'user_input_str' found!")
     prompt = f"""
@@ -29,7 +30,8 @@ Respond ONLY with the tool name: either 'multi_shop_search' or 'compare_prices_s
 """
     response = llm.invoke(prompt).strip().lower()
     print(f"[Router Decision] '{user_input_str}' -> {response}")
-    return response
+    return {response : "next"}
+    #return response
 
 
 # LangGraph Setup
@@ -46,10 +48,7 @@ graph.add_node("compare", compare_prices_tool_node)
 graph.add_node("route", smart_router)
 
 graph.set_entry_point("route")
-graph.add_conditional_edges("route", path=smart_router, path_map={
-    "multi_shop_search": "search",
-    "compare_prices_search": "compare"
-})
+graph.add_conditional_edges("route", smart_router)
 
 
 graph.set_finish_point("search")
@@ -58,5 +57,5 @@ graph.set_finish_point("compare")
 final_graph = graph.compile()
 
 def run_router(input_text):
-    print("[DEBUG] input_dict passed to smart_router:", input_text)
+    print("[DEBUG] input_text passed to invoke call while inside a GraphState builder:", input_text)
     return final_graph.invoke(GraphState(user_input=input_text))
